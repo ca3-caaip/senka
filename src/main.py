@@ -11,6 +11,6 @@ if __name__ == '__main__':
   if chain == 'bsc':
     setting['bscscan_key'] = os.environ['BSCSCAN_KEY']
   senka = Senka(setting, './pyproject.toml')
-  caaj = senka.get_caaj_csv(chain, address, )
+  caaj = senka.get_caaj_csv(chain, address )
   print(caaj)
   

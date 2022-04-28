@@ -1,4 +1,0 @@
-web3
-bscscan-python
-senkalib
-pandas
