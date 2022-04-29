@@ -1,17 +1,21 @@
 # senka
 
-
 ## docker
+
 ### for start
+
 $ docker-compose up -d
 
 ### for access to shell in the container
+
 $ docker-compose exec senka bash
 
 ### for end
+
 $ docker-compose down
 
 ### for remove
+
 $ docker-compose down --rmi all --volumes --remove-orphans
 
 ## for test
@@ -23,7 +27,6 @@ $ poetry config virtualenvs.in-project true && poetry install
 $ poetry shell
 $ pytest --cov=src --cov-branch --cov-report=term-missing -vv
 ```
-
 
 ## for adding plugin
 
