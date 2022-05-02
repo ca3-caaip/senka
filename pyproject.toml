@@ -11,9 +11,6 @@ bscscan-python = "^2.0.0"
 pandas = "^1.4.1"
 senkalib = {git = 'https://github.com/ca3-caaip/senkalib.git', rev = 'ed9d8841aca110a448a5606eda814db50c9c9834' }
 toml = "^0.10.2"
-osmosis_plugin = {git = 'https://github.com/watagori/osmosis_plugin-1.git', rev ='8d6b46d9643e55cb27c58f5bbee236c6c24ebca4' }
-
-
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
