@@ -8,17 +8,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
-          architecture: "x64"
-      - uses: abatilo/actions-poetry@v2.0.0
+      - run: curl -sSL https://install.python-poetry.org | python - --preview
+      - run: export PATH="$PATH:$HOME/.poetry/bin"
+      - uses: actions/cache@v2
         with:
-          poetry-version: "1.2.0b1"
-      - name: Get Python version
-        run: python -V
-      - name: Install dependencies
-        run: poetry config virtualenvs.in-project true && poetry install
-      - name: Run pytest
-        run: poetry run pytest -v --cov=src
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+      - run: poetry config virtualenvs.in-project true && poetry install
+      - uses: pre-commit/action@v2.0.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: poetry run pytest -v --cov=src
