@@ -18,6 +18,27 @@ $ docker-compose down
 
 $ docker-compose down --rmi all --volumes --remove-orphans
 
+## for developers
+
+1. Install poetry to set up python environment
+
+```
+If you have not yet installed poetry, first install poetry as follows
+Set the poetry path as the log shows.
+$ curl -sSL https://install.python-poetry.org | python3 -
+
+Set up the python environment as follows.
+$ poetry config virtualenvs.in-project true && poetry install
+```
+
+2. Install pre-commit
+
+```
+# Before committing, we use pre-commmit hook to check the code style.
+# Install pre-commit in the following way
+$ pre-commit install
+```
+
 ## for test
 
 ```
