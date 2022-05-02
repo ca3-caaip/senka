@@ -19,6 +19,4 @@ jobs:
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
       - run: poetry config virtualenvs.in-project true && poetry install
       - uses: pre-commit/action@v2.0.3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - run: poetry run pytest -v --cov=src
