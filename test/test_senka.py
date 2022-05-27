@@ -38,9 +38,11 @@ class TestSenka(unittest.TestCase):
                 senka = Senka(
                     {}, "%s/test_senka_plugin.toml" % os.path.dirname(__file__)
                 )
-                senka.get_caaj(
-                    "no_existence_chain", "0xfFceBED170CE0230D513a0a388011eF9c2F97503"
-                )
+                transaction_params = {
+                    "type": "address",
+                    "data": "0xfFceBED170CE0230D513a0a388011eF9c2F97503",
+                }
+                senka.get_caaj("no_existence_chain", transaction_params)
 
     @patch("senkalib.token_original_id_table.TokenOriginalIdTable.__init__", mock_init)
     def test_get_caaj(self):
@@ -48,8 +50,57 @@ class TestSenka(unittest.TestCase):
             SenkaLib, "get_available_chain", new=TestSenka.mock_get_available_chains
         ):
             senka = Senka({}, "%s/test_senka_plugin.toml" % os.path.dirname(__file__))
+            transaction_params = {
+                "type": "address",
+                "data": "0xfFceBED170CE0230D513a0a388011eF9c2F97503",
+            }
             caaj_list, unknown_transactions_list = senka.get_caaj(
-                "test_one", "0xfFceBED170CE0230D513a0a388011eF9c2F97503"
+                "test_one", transaction_params
+            )
+            cj = caaj_list[0]
+            unknown_transaction = unknown_transactions_list[0]
+            assert len(caaj_list) == 2
+            assert len(unknown_transactions_list) == 1
+            assert cj.executed_at == "2022-01-12 11:11:11"
+            assert cj.chain == "chain"
+            assert cj.platform == "platform"
+            assert cj.application == "application"
+            assert (
+                cj.transaction_id
+                == "0x36512c7e09e3570dfc53176252678ee9617660550d36f4da797afba6fc55bba6"
+            )
+            assert cj.trade_uuid == "bbbbbbddddddd"
+            assert cj.type == "deposit"
+            assert cj.amount == Decimal("0.005147")
+            assert cj.token_symbol == "testone"
+            assert (
+                cj.token_original_id
+                == "ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED"
+            )
+            assert cj.token_symbol_uuid == "3a2570c5-15c4-2860-52a8-bff14f27a236"
+            assert cj.caaj_from == "0x111111111111111111111"
+            assert cj.caaj_to == "0x222222222222222222222"
+            assert cj.comment == "hello world"
+            assert unknown_transaction.transaction_id == "unknown"
+            assert unknown_transaction.chain == "test_one"
+            assert (
+                unknown_transaction.address
+                == "0xfFceBED170CE0230D513a0a388011eF9c2F97503"
+            )
+            assert unknown_transaction.reason == "there is no applicable plugin"
+
+    @patch("senkalib.token_original_id_table.TokenOriginalIdTable.__init__", mock_init)
+    def test_get_caaj_from_data(self):
+        with patch.object(
+            SenkaLib, "get_available_chain", new=TestSenka.mock_get_available_chains
+        ):
+            senka = Senka({}, "%s/test_senka_plugin.toml" % os.path.dirname(__file__))
+            transaction_params = {
+                "type": "address",
+                "data": "0xfFceBED170CE0230D513a0a388011eF9c2F97503",
+            }
+            caaj_list, unknown_transactions_list = senka.get_caaj(
+                "test_one", transaction_params
             )
             cj = caaj_list[0]
             unknown_transaction = unknown_transactions_list[0]
@@ -90,7 +141,7 @@ class TestSenka(unittest.TestCase):
         ):
             senka = Senka({}, "%s/test_senka_plugin.toml" % os.path.dirname(__file__))
             caaj_csv = senka.get_caaj_csv(
-                "test_one", "0xfFceBED170CE0230D513a0a388011eF9c2F97503"
+                "address", "test_one", "0xfFceBED170CE0230D513a0a388011eF9c2F97503"
             )
             caaj_csv_lines = caaj_csv.splitlines()
             assert len(caaj_csv_lines) == 3
@@ -125,8 +176,7 @@ class OneTransactionGenerator(TransactionGenerator):
     @classmethod
     def get_transactions(
         cls,
-        settings: SenkaSetting,
-        address: str,
+        transaction_params: dict,
         starttime: Union[int, None] = None,
         endtime: Union[int, None] = None,
         startblock: Union[int, None] = None,

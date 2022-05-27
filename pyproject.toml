@@ -9,7 +9,8 @@ python = "^3.9"
 web3 = "^5.28.0"
 bscscan-python = "^2.0.0"
 pandas = "^1.4.1"
-senkalib = { git = 'https://github.com/ca3-caaip/senkalib.git', rev = '9048df51f4f4a35b13295406489ea50e37b50b27' }
+senkalib = { git = 'https://github.com/ca3-caaip/senkalib.git', rev = '87fb3e6a03f55b4e50b6d8a4706198f9c68c3d18' }
+
 toml = "^0.10.2"
 
 [tool.poetry.dev-dependencies]

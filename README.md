@@ -91,10 +91,13 @@ $ curl -sSL https://install.python-poetry.org | python -
 $ poetry config virtualenvs.in-project true && poetry install
 $ poetry shell
 
-# python src/main chain_name address > result.csv
-
+# If you want to execute senka with chain and address, please use the following command.
+$ python src/main.py --chain=<chain> --address=<address>
 ex.
-$ python src/main.py osmosis 0x0000000000000000000000000000000000000 > result.csv
-```
+$ python src/main.py --chain=osmosis --address=0x0000000000000000000000000000000000000
 
-change chain or address whatever you want to check.
+# If you want to execute senka with chain and data, please use the following command.
+$ python src/main.py --chain=<chain> --data_path=<data>
+ex.
+$ python src/main.py --chain bitbank --data_path test/testdata/bitbank/bitbank_exchange.csv
+```
