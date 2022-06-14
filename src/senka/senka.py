@@ -2,6 +2,7 @@ from typing import List, Tuple, Union
 
 import pandas as pd
 from senkalib.caaj_journal import CaajJournal
+from senkalib.chain.transaction import Transaction
 from senkalib.senka_lib import SenkaLib
 from senkalib.senka_setting import SenkaSetting
 from senkalib.token_original_id_table import TokenOriginalIdTable
@@ -88,7 +89,7 @@ class Senka:
 
     @staticmethod
     def _make_caaj_from_transaction_and_plugins(
-        transactions: List[CaajJournal],
+        transactions: list[Transaction],
         plugins: list,
         token_original_ids: TokenOriginalIdTable,
         chain: str,
@@ -111,6 +112,7 @@ class Senka:
                             address,
                             transaction.transaction_id,
                             "there is no applicable plugin",
+                            transaction.get_timestamp(),
                         )
                     )
         return caaj, unknown_transactions
