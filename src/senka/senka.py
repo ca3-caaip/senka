@@ -96,21 +96,19 @@ class Senka:
     ) -> Tuple[List[CaajJournal], List[UnknownTransaction]]:
         caaj = []
         unknown_transactions = []
-        for transaction in transactions:
-            for plugin in plugins:
-                if plugin.can_handle(transaction):
-                    caaj_peace = plugin.get_caajs(
-                        address, transaction, token_original_ids
+        for tx in transactions:
+            applicable_plugin = next(filter(lambda p: p.can_handle(tx), plugins), None)
+            if applicable_plugin:
+                caaj.extend(
+                    applicable_plugin.get_caajs(address, tx, token_original_ids)
+                )
+            else:
+                unknown_transactions.append(
+                    UnknownTransaction(
+                        chain,
+                        address,
+                        tx.transaction_id,
+                        "there is no applicable plugin",
                     )
-                    caaj.extend(caaj_peace)
-                    break
-                else:
-                    unknown_transactions.append(
-                        UnknownTransaction(
-                            chain,
-                            address,
-                            transaction.transaction_id,
-                            "there is no applicable plugin",
-                        )
-                    )
+                )
         return caaj, unknown_transactions
