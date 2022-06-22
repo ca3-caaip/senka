@@ -3,12 +3,12 @@ from typing import List
 from xmlrpc.client import boolean
 
 from senkalib.caaj_journal import CaajJournal
-from senkalib.chain.transaction import Transaction
+from senkalib.platform.transaction import Transaction
 from senkalib.token_original_id_table import TokenOriginalIdTable
 
 
 class TestOnePlugin:
-    chain = "test_one"
+    platform = "test_one"
 
     @classmethod
     def can_handle(cls, transaction: Transaction) -> boolean:
@@ -25,9 +25,9 @@ class TestOnePlugin:
         token_original_ids: TokenOriginalIdTable,
     ) -> List[CaajJournal]:
         executed_at = "2022-01-12 11:11:11"
-        chain = "chain"
         platform = "platform"
         application = "application"
+        service = "service"
         transaction_id = (
             "0x36512c7e09e3570dfc53176252678ee9617660550d36f4da797afba6fc55bba6"
         )
@@ -45,9 +45,9 @@ class TestOnePlugin:
 
         cj = CaajJournal(
             executed_at,
-            chain,
             platform,
             application,
+            service,
             transaction_id,
             trade_uuid,
             type,

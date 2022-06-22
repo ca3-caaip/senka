@@ -9,7 +9,7 @@ import toml
 
 class PluginManager:
     @classmethod
-    def get_plugins(cls, chain: str, setting_toml_path: str) -> List:
+    def get_plugins(cls, platform: str, setting_toml_path: str) -> List:
         obj = toml.load(setting_toml_path)
         plugins = []
         for module_name in obj["senka"]["plugin"]["senka_plugin"]:
@@ -20,7 +20,7 @@ class PluginManager:
                 dir = re.sub("_(.)", lambda x: x.group(1).upper(), module_name)
                 dir = dir[0].upper() + dir[1:]
                 plugin_class = getattr(module, dir)
-                if plugin_class.chain.lower() == chain.lower():
+                if plugin_class.platform.lower() == platform.lower():
                     plugins.append(plugin_class)
             except Exception as e:
                 etype, value, tb = exc_info()

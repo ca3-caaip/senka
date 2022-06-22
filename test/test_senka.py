@@ -7,8 +7,8 @@ from pathlib import Path
 from typing import List, Union
 from unittest.mock import patch
 
-from senkalib.chain.transaction import Transaction
-from senkalib.chain.transaction_generator import TransactionGenerator
+from senkalib.platform.transaction import Transaction
+from senkalib.platform.transaction_generator import TransactionGenerator
 from senkalib.senka_lib import SenkaLib
 from senkalib.senka_setting import SenkaSetting
 
@@ -21,18 +21,22 @@ class TestSenka(unittest.TestCase):
     def mock_init(self, url: str):
         return None
 
-    def test_get_available_chains(self):
+    def test_get_available_platforms(self):
         with patch.object(
-            SenkaLib, "get_available_chain", new=TestSenka.mock_get_available_chains
+            SenkaLib,
+            "get_available_platform",
+            new=TestSenka.mock_get_available_platforms,
         ):
             senka = Senka({}, "%s/test_senka_plugin.toml" % os.path.dirname(__file__))
-            chains = senka.get_available_chains()
-            assert chains[0] == "test_one"
-            assert chains[1] == "test_zero"
+            platforms = senka.get_available_platforms()
+            assert platforms[0] == "test_one"
+            assert platforms[1] == "test_zero"
 
-    def test_get_caaj_no_chain(self):
+    def test_get_caaj_no_platform(self):
         with patch.object(
-            SenkaLib, "get_available_chain", new=TestSenka.mock_get_available_chains
+            SenkaLib,
+            "get_available_platform",
+            new=TestSenka.mock_get_available_platforms,
         ):
             with self.assertRaises(ValueError):
                 senka = Senka(
@@ -42,12 +46,14 @@ class TestSenka(unittest.TestCase):
                     "type": "address",
                     "data": "0xfFceBED170CE0230D513a0a388011eF9c2F97503",
                 }
-                senka.get_caaj("no_existence_chain", transaction_params)
+                senka.get_caaj("no_existence_platform", transaction_params)
 
     @patch("senkalib.token_original_id_table.TokenOriginalIdTable.__init__", mock_init)
     def test_get_caaj(self):
         with patch.object(
-            SenkaLib, "get_available_chain", new=TestSenka.mock_get_available_chains
+            SenkaLib,
+            "get_available_platform",
+            new=TestSenka.mock_get_available_platforms,
         ):
             senka = Senka({}, "%s/test_senka_plugin.toml" % os.path.dirname(__file__))
             transaction_params = {
@@ -62,9 +68,9 @@ class TestSenka(unittest.TestCase):
             assert len(caaj_list) == 2
             assert len(unknown_transactions_list) == 1
             assert cj.executed_at == "2022-01-12 11:11:11"
-            assert cj.chain == "chain"
             assert cj.platform == "platform"
             assert cj.application == "application"
+            assert cj.service == "service"
             assert (
                 cj.transaction_id
                 == "0x36512c7e09e3570dfc53176252678ee9617660550d36f4da797afba6fc55bba6"
@@ -82,7 +88,7 @@ class TestSenka(unittest.TestCase):
             assert cj.caaj_to == "0x222222222222222222222"
             assert cj.comment == "hello world"
             assert unknown_transaction.transaction_id == "unknown"
-            assert unknown_transaction.chain == "test_one"
+            assert unknown_transaction.platform == "test_one"
             assert (
                 unknown_transaction.address
                 == "0xfFceBED170CE0230D513a0a388011eF9c2F97503"
@@ -92,7 +98,9 @@ class TestSenka(unittest.TestCase):
     @patch("senkalib.token_original_id_table.TokenOriginalIdTable.__init__", mock_init)
     def test_get_caaj_from_data(self):
         with patch.object(
-            SenkaLib, "get_available_chain", new=TestSenka.mock_get_available_chains
+            SenkaLib,
+            "get_available_platform",
+            new=TestSenka.mock_get_available_platforms,
         ):
             senka = Senka({}, "%s/test_senka_plugin.toml" % os.path.dirname(__file__))
             transaction_params = {
@@ -107,9 +115,9 @@ class TestSenka(unittest.TestCase):
             assert len(caaj_list) == 2
             assert len(unknown_transactions_list) == 1
             assert cj.executed_at == "2022-01-12 11:11:11"
-            assert cj.chain == "chain"
             assert cj.platform == "platform"
             assert cj.application == "application"
+            assert cj.service == "service"
             assert (
                 cj.transaction_id
                 == "0x36512c7e09e3570dfc53176252678ee9617660550d36f4da797afba6fc55bba6"
@@ -127,7 +135,7 @@ class TestSenka(unittest.TestCase):
             assert cj.caaj_to == "0x222222222222222222222"
             assert cj.comment == "hello world"
             assert unknown_transaction.transaction_id == "unknown"
-            assert unknown_transaction.chain == "test_one"
+            assert unknown_transaction.platform == "test_one"
             assert (
                 unknown_transaction.address
                 == "0xfFceBED170CE0230D513a0a388011eF9c2F97503"
@@ -137,7 +145,9 @@ class TestSenka(unittest.TestCase):
     @patch("senkalib.token_original_id_table.TokenOriginalIdTable.__init__", mock_init)
     def test_get_caaj_csv(self):
         with patch.object(
-            SenkaLib, "get_available_chain", new=TestSenka.mock_get_available_chains
+            SenkaLib,
+            "get_available_platform",
+            new=TestSenka.mock_get_available_platforms,
         ):
             senka = Senka({}, "%s/test_senka_plugin.toml" % os.path.dirname(__file__))
             caaj_csv = senka.get_caaj_csv(
@@ -147,31 +157,31 @@ class TestSenka(unittest.TestCase):
             assert len(caaj_csv_lines) == 3
             assert (
                 caaj_csv_lines[0]
-                == "executed_at,chain,platform,application,\
+                == "executed_at,platform,application,service,\
 transaction_id,trade_uuid,type,amount,token_symbol,token_original_id,token_symbol_uuid,caaj_from,caaj_to,comment"
             )
             assert (
                 caaj_csv_lines[1]
-                == "2022-01-12 11:11:11,chain,platform,application,\
+                == "2022-01-12 11:11:11,platform,application,service,\
 0x36512c7e09e3570dfc53176252678ee9617660550d36f4da797afba6fc55bba6,bbbbbbddddddd,deposit,\
 0.005147,testone,ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED,\
 3a2570c5-15c4-2860-52a8-bff14f27a236,0x111111111111111111111,0x222222222222222222222,hello world"
             )
             assert (
                 caaj_csv_lines[2]
-                == "2022-01-12 11:11:11,chain,platform,application,\
+                == "2022-01-12 11:11:11,platform,application,service,\
 0x36512c7e09e3570dfc53176252678ee9617660550d36f4da797afba6fc55bba6,bbbbbbddddddd,deposit,\
 0.005147,testone,ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED,\
 3a2570c5-15c4-2860-52a8-bff14f27a236,0x111111111111111111111,0x222222222222222222222,hello world"
             )
 
     @classmethod
-    def mock_get_available_chains(cls):
+    def mock_get_available_platforms(cls):
         return [OneTransactionGenerator, ZeroTransactionGenerator]
 
 
 class OneTransactionGenerator(TransactionGenerator):
-    chain = "test_one"
+    platform = "test_one"
 
     @classmethod
     def get_transactions(
@@ -214,7 +224,7 @@ class OneTransactionGenerator(TransactionGenerator):
 
 
 class OneTransaction(Transaction):
-    chain = "test_one"
+    platform = "test_one"
 
     def __init__(
         self,
@@ -238,7 +248,7 @@ class OneTransaction(Transaction):
 
 
 class ZeroTransactionGenerator(TransactionGenerator):
-    chain = "test_zero"
+    platform = "test_zero"
 
     @classmethod
     def get_transactions(

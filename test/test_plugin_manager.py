@@ -13,7 +13,7 @@ class TestPluginManager(unittest.TestCase):
             "test_one", "%s/test_senka_plugin.toml" % os.path.dirname(__file__)
         )
         assert len(plugins) == 1
-        assert plugins[0].chain == "test_one"
+        assert plugins[0].platform == "test_one"
 
     def test_get_plugins_exception(self):
         with self.assertRaises(RuntimeError):
