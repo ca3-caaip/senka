@@ -8,8 +8,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        "--chain",
-        help="--chain [chain]",
+        "--platform",
+        help="--platform [platform]",
     )
     parser.add_argument(
         "--address",
@@ -21,15 +21,15 @@ if __name__ == "__main__":
     )
     setting = {}
     args = parser.parse_args()
-    if args.chain is not None and args.address is not None:
-        if args.chain == "bsc":
+    if args.platform is not None and args.address is not None:
+        if args.platform == "bsc":
             setting["bscscan_key"] = os.environ["BSCSCAN_KEY"]
         senka = Senka(setting, "./pyproject.toml")
-        caaj = senka.get_caaj_csv("address", args.chain, args.address)
-    elif args.chain is not None and args.data_path is not None:
+        caaj = senka.get_caaj_csv("address", args.platform, args.address)
+    elif args.platform is not None and args.data_path is not None:
         senka = Senka(setting, "./pyproject.toml")
         data = Path(f"{os.path.abspath(args.data_path)}").read_text()
-        caaj = senka.get_caaj_csv("csv", args.chain, data)
+        caaj = senka.get_caaj_csv("csv", args.platform, data)
     else:
         raise Exception("Invalid arguments")
 

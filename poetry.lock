@@ -833,8 +833,8 @@ web3 = "^5.29.0"
 [package.source]
 type = "git"
 url = 'https://github.com/ca3-caaip/senkalib.git'
-reference = 'b4a41ab228f2532707f712eb11ae68da9aa1b378'
-resolved_reference = "b4a41ab228f2532707f712eb11ae68da9aa1b378"
+reference = '30e4d25799e43c6e2ab8d9d4d3b34dfce8378a3f'
+resolved_reference = "30e4d25799e43c6e2ab8d9d4d3b34dfce8378a3f"
 
 [[package]]
 name = "six"
@@ -968,7 +968,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "36d0f2adad2c7175387f986eec6a5a12ba72068cf76eacc23f5a98544e8716a8"
+content-hash = "b36da52a48f9ccb39b6207a6ed33ba080c51b38b93c0bc4e1d0ba51a0e45ee22"
 
 [metadata.files]
 aiohttp = [
