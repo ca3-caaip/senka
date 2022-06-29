@@ -34,11 +34,7 @@ class TestOnePlugin:
         trade_uuid = "bbbbbbddddddd"
         type = "deposit"
         amount = Decimal("0.005147")
-        token_symbol = "testone"
-        token_original_id = (
-            "ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED"
-        )
-        token_symbol_uuid = "3a2570c5-15c4-2860-52a8-bff14f27a236"
+        uti = "testone/osmosis"
         caaj_from = "0x111111111111111111111"
         caaj_to = "0x222222222222222222222"
         comment = "hello world"
@@ -52,9 +48,7 @@ class TestOnePlugin:
             trade_uuid,
             type,
             amount,
-            token_symbol,
-            token_original_id,
-            token_symbol_uuid,
+            uti,
             caaj_from,
             caaj_to,
             comment,
