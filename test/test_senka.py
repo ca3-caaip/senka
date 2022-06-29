@@ -78,12 +78,7 @@ class TestSenka(unittest.TestCase):
             assert cj.trade_uuid == "bbbbbbddddddd"
             assert cj.type == "deposit"
             assert cj.amount == Decimal("0.005147")
-            assert cj.token_symbol == "testone"
-            assert (
-                cj.token_original_id
-                == "ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED"
-            )
-            assert cj.token_symbol_uuid == "3a2570c5-15c4-2860-52a8-bff14f27a236"
+            assert cj.uti == "testone/osmosis"
             assert cj.caaj_from == "0x111111111111111111111"
             assert cj.caaj_to == "0x222222222222222222222"
             assert cj.comment == "hello world"
@@ -125,12 +120,7 @@ class TestSenka(unittest.TestCase):
             assert cj.trade_uuid == "bbbbbbddddddd"
             assert cj.type == "deposit"
             assert cj.amount == Decimal("0.005147")
-            assert cj.token_symbol == "testone"
-            assert (
-                cj.token_original_id
-                == "ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED"
-            )
-            assert cj.token_symbol_uuid == "3a2570c5-15c4-2860-52a8-bff14f27a236"
+            assert cj.uti == "testone/osmosis"
             assert cj.caaj_from == "0x111111111111111111111"
             assert cj.caaj_to == "0x222222222222222222222"
             assert cj.comment == "hello world"
@@ -158,21 +148,19 @@ class TestSenka(unittest.TestCase):
             assert (
                 caaj_csv_lines[0]
                 == "executed_at,platform,application,service,\
-transaction_id,trade_uuid,type,amount,token_symbol,token_original_id,token_symbol_uuid,caaj_from,caaj_to,comment"
+transaction_id,trade_uuid,type,amount,uti,caaj_from,caaj_to,comment"
             )
             assert (
                 caaj_csv_lines[1]
                 == "2022-01-12 11:11:11,platform,application,service,\
 0x36512c7e09e3570dfc53176252678ee9617660550d36f4da797afba6fc55bba6,bbbbbbddddddd,deposit,\
-0.005147,testone,ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED,\
-3a2570c5-15c4-2860-52a8-bff14f27a236,0x111111111111111111111,0x222222222222222222222,hello world"
+0.005147,testone/osmosis,0x111111111111111111111,0x222222222222222222222,hello world"
             )
             assert (
                 caaj_csv_lines[2]
                 == "2022-01-12 11:11:11,platform,application,service,\
 0x36512c7e09e3570dfc53176252678ee9617660550d36f4da797afba6fc55bba6,bbbbbbddddddd,deposit,\
-0.005147,testone,ibc/46B44899322F3CD854D2D46DEEF881958467CDD4B3B10086DA49296BBED94BED,\
-3a2570c5-15c4-2860-52a8-bff14f27a236,0x111111111111111111111,0x222222222222222222222,hello world"
+0.005147,testone/osmosis,0x111111111111111111111,0x222222222222222222222,hello world"
             )
 
     @classmethod
