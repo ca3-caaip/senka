@@ -34,7 +34,7 @@ class TestOnePlugin:
         trade_uuid = "bbbbbbddddddd"
         type = "deposit"
         amount = Decimal("0.005147")
-        uti = "testone/osmosis"
+        uti = "testone"
         caaj_from = "0x111111111111111111111"
         caaj_to = "0x222222222222222222222"
         comment = "hello world"
