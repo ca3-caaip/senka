@@ -9,7 +9,7 @@ python = "^3.9"
 web3 = "^5.28.0"
 bscscan-python = "^2.0.0"
 pandas = "^1.4.1"
-senkalib = {git = 'https://github.com/ca3-caaip/senkalib.git', rev = 'aeb11bcaf22defaf4db3c722acf67994f68ef8dc' }
+senkalib = {git = 'https://github.com/ca3-caaip/senkalib.git', rev = 'd0386559fd77d492298f0fabdad919d6da21dc07' }
 
 toml = "^0.10.2"
 
