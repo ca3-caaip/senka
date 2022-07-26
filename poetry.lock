@@ -839,13 +839,8 @@ web3 = "^5.29.0"
 [package.source]
 type = "git"
 url = 'https://github.com/ca3-caaip/senkalib.git'
-<<<<<<< HEAD
 reference = 'd0386559fd77d492298f0fabdad919d6da21dc07'
 resolved_reference = "d0386559fd77d492298f0fabdad919d6da21dc07"
-=======
-reference = 'f488ab01979ffd9f7245073d8148756426262cf7'
-resolved_reference = "f488ab01979ffd9f7245073d8148756426262cf7"
->>>>>>> master
 
 [[package]]
 name = "setuptools"
@@ -993,11 +988,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-<<<<<<< HEAD
 content-hash = "f6da37aa88e88f180f2c236b6e2977bb9ec6d924ce2e04d991ad4fd4d8f523e7"
-=======
-content-hash = "a6d4709436c26af19fc069d9856f7eeb9937add1ab5830e629c50c61659aebd7"
->>>>>>> master
 
 [metadata.files]
 aiohttp = [
